@@ -1,0 +1,297 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 31
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true //for accessing svg xml programatically
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+    flavorDimensions "CloudChatApp"
+    def appName = 'CloudChatApp'
+
+    /*signingConfigs {
+        config {
+            storeFile file("cloudchatapp.jks")
+            storePassword "zd33UZzZg9{8Vp7{"
+            keyAlias "pgbevent"
+            keyPassword "zd33UZzZg9{8Vp7{"
+        }
+    }*/
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //signingConfig signingConfigs.config
+
+            // Create apk with app name,
+            // version code,name
+            // and  time stamp
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def name = appName + "_" + getCurrentFlavor() + "_" + variant.mergedFlavor.versionName + "_" +
+                            variant.mergedFlavor.versionCode + "_" +
+                            getDate() + ".apk";
+                    output.outputFileName = name
+                }
+            }
+
+        }
+
+        debug {
+            //signingConfig signingConfigs.config
+
+            debuggable true
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    productFlavors {
+
+        play {
+            buildConfigField "String", "FILE_PROVIDER", '"com.application.cloudchatapp.play.provider"'
+            applicationId 'com.application.cloudchatapp'
+            buildConfigField "String", "BASE_URL", '""'
+            buildConfigField "String", "BASE_URL_AWS", '""'
+            buildConfigField "String", "BASE_URL_AWS_INITIAL", '""'
+
+            manifestPlaceholders = [
+                    appName     : "Cloud Chat App",
+                    appIcon     : '@drawable/ic_launcher_background',
+                    appIconRound: '@drawable/ic_launcher_background']
+
+            buildConfigField "String", "mapKey", '"AIzaSyCHPLYPccCa_Rysv2OZjO3-zTHjCSV0mhs"'
+            versionCode 1
+            versionName '1.0'
+            buildConfigField "String", "SOCKET_BASE_URL", '""'
+            buildConfigField "String", "BASE_AUTH", '""'
+        }
+
+    }
+
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    // for kotlin
+    //noinspection GradleDependency
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+
+
+    //In App Update
+    // This dependency is downloaded from the Google’s Maven repository.
+    // So, make sure you also include that repository in your project's build.gradle file.
+    implementation("com.google.android.play:core:1.10.3")
+
+    // For Kotlin users also import the Kotlin extensions library for Play Core:
+    implementation 'com.google.android.play:core-ktx:1.8.1'
+    implementation 'com.google.firebase:firebase-config-ktx'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.3.1'
+    implementation "androidx.activity:activity-ktx:1.2.3"
+    implementation "androidx.fragment:fragment-ktx:1.3.5"
+
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    implementation "com.google.android.material:material:1.4.0-rc01"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //implementation 'com.github.mukeshsolanki:Google-Places-AutoComplete-EditText:0.0.8'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
+    implementation "com.squareup.okhttp3:okhttp:4.8.0"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:4.12.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.11.0"
+
+    // All dimens for dp
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    // All dimens for sp
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    // run time permission
+    implementation 'com.karumi:dexter:6.2.2'
+
+
+    // Navigation KTX
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
+    // Coroutines
+//    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+//    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+
+    // Room
+//    implementation "androidx.room:room-runtime:2.3.0"
+//    implementation "androidx.room:room-rxjava2:2.3.0"
+//    kapt "androidx.room:room-compiler:2.3.0"
+
+    // DataStore
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+
+    // Multidex
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Circular ImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    // pagination with recyelerview
+    //implementation 'com.github.Batterii:PagingRecycler:v1.1.1'
+
+
+
+
+}
+
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    Pattern pattern;
+    pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    Matcher matcher = pattern.matcher(tskReqStr)
+    if (matcher.find())
+        return matcher.group(1).toLowerCase()
+    else {
+        println "NO MATCH FOUND"
+        return "";
+    }
+}
+
+static def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
+}
+
+
+
+/*
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.application.cloudchatapp"
+        minSdk 27
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+*/

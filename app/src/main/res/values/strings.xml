@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Cloud Chat App</string>
+    <string name="completed">Complete</string>
+    <string name="next">Next</string>
+    <string name="error_something_wrong">Something went wrong</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+</resources>

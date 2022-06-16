@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_65sdp"
+    android:layout_height="@dimen/_65sdp"
+    android:elevation="@dimen/_200sdp"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:background="#00FFFFFF">
+
+    <ProgressBar
+        android:layout_width="@dimen/_65sdp"
+        android:layout_height="@dimen/_65sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:alpha=".9"
+        android:indeterminateDrawable="@drawable/progress_icon" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:text="M" />
+</RelativeLayout>
