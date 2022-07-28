@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cal_yellow">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/ivMain"
         android:layout_width="@dimen/_93sdp"
         android:layout_height="@dimen/_93sdp"
-        android:src="@drawable/ic_small_placeholder"
+        android:visibility="visible"
+        android:src="@drawable/ic_conversation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

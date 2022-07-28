@@ -13,12 +13,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.application.cloudchatapp.utils.AppUtil
 import com.application.cloudchatapp.R
+import com.application.cloudchatapp.utils.AppConstant
+import java.text.SimpleDateFormat
 import java.util.*
 
 private const val TAG = "BaseActivity"
 
 abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var binding: ViewBinding
+    protected val simpleDateFormat =
+        SimpleDateFormat(AppConstant.DATE_PATTERN.SIMPLE_DATE_FORMAT, Locale.getDefault())
+
     private var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,8 @@
 package com.app.pbgevents.utils
 
+import android.content.Context
 import android.util.Log
+import com.application.cloudchatapp.R
 import com.application.cloudchatapp.utils.AppConstant
 import java.text.DateFormat
 import java.text.ParseException
@@ -1026,6 +1028,45 @@ object DateUtils {
             inputText = outputDate.format(date)
         }
         return inputText
+    }
+
+    fun getFormattedDate(context: Context?, smsTimeInMilis: Long): String? {
+        val smsTime = Calendar.getInstance()
+        smsTime.timeInMillis = smsTimeInMilis
+        val now = Calendar.getInstance()
+        val timeFormatString = AppConstant.DATE_PATTERN.TIME_FORMAT
+        val dateTimeFormatString = AppConstant.DATE_PATTERN.DATE_FORMAT_SIMPLE
+        return when {
+            now[Calendar.DATE] == smsTime[Calendar.DATE] -> {
+                android.text.format.DateFormat.format(timeFormatString, smsTime).toString()
+            }
+            now[Calendar.DATE] - smsTime[Calendar.DATE] == 1 -> {
+                context?.getString(R.string.yesterday)
+            }
+            now[Calendar.YEAR] == smsTime[Calendar.YEAR] -> {
+                android.text.format.DateFormat.format(dateTimeFormatString, smsTime).toString()
+            }
+            else -> {
+                android.text.format.DateFormat.format(
+                    AppConstant.DATE_PATTERN.DATE_FORMAT_SIMPLE,
+                    smsTime
+                ).toString()
+            }
+        }
+    }
+
+    fun milliseconds(date: String?): Long {
+        val sdf = SimpleDateFormat(AppConstant.DATE_PATTERN.SIMPLE_DATE_FORMAT)
+        try {
+            val mDate = sdf.parse(date)
+            val timeInMilliseconds = mDate.time
+            //  println("Date in milli :: $timeInMilliseconds")
+            return timeInMilliseconds
+        } catch (e: ParseException) {
+            // TODO Auto-generated catch block
+            e.printStackTrace()
+        }
+        return 0
     }
 
 }

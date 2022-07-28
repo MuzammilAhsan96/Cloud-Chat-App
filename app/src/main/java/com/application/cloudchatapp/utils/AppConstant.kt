@@ -1,8 +1,14 @@
 package com.application.cloudchatapp.utils
 
+import com.application.cloudchatapp.model.base.LoginResponseModel
+import com.application.cloudchatapp.model.base.UserDetailResponse
+
 
 object AppConstant {
 
+    const val CHAT_TABLE = "usersChat"
+    const val USER_TABLE = "users"
+    const val CHAT = "chat"
     const val SPLASH_DELAY: Long = 2000
     const val IMAGE_PICK_CODE = 1000
 
@@ -10,6 +16,7 @@ object AppConstant {
     const val PERMISSION_CODE = 1001
     const val NAME_MIN_LENGTH = 3
     //var USER_PROFILE: UserProfileData = UserProfileData()
+    var USER_PROFILE: UserDetailResponse = UserDetailResponse()
 
 
     interface APP {
@@ -18,11 +25,13 @@ object AppConstant {
             const val EXHIBITION_NAME = "exhibition_name"
             const val ACCESS_TOKEN = "access_token"
             const val DEVICE_TOKEN = "device_token"
-//            const val FCM_TOKEN = "fcm_token"
+
+            //            const val FCM_TOKEN = "fcm_token"
             const val DEVICE_ID = "device_id"
             const val EXHIBITION_ID = "exhibition_id"
             const val EXHIBITION_IMAGE = "exhibition_image"
-//            const val DEVICE_TYPE = "android"
+
+            //            const val DEVICE_TYPE = "android"
             const val DEVICE_TYPE = "2"
             const val USER_LOGGED_IN = "user_logged_in"
             const val IS_SWITCH = "is_switch"
@@ -32,6 +41,7 @@ object AppConstant {
 
     interface BK {
         companion object {
+            const val CHAT_MODEL = "CHAT_MODEL"
             const val SENDER_ID = "SENDER_ID"
             const val FROM = "FROM"
             const val NOTIFICATION = "NOTIFICATION"
@@ -79,8 +89,8 @@ object AppConstant {
         }
     }
 
-    interface NOTIFICATION_TYPE{
-        companion object{
+    interface NOTIFICATION_TYPE {
+        companion object {
 
             const val REQUEST = 1
             const val ACCEPT = 3
@@ -89,7 +99,7 @@ object AppConstant {
 
 
             const val C0NN_SCAN = 13
-            const val   EVENT_REM = 8
+            const val EVENT_REM = 8
 
             const val RESCHEDULE = 10
 
@@ -171,6 +181,7 @@ object AppConstant {
 
     interface DATE_PATTERN {
         companion object {
+            const val SIMPLE_DATE_FORMAT = "dd-MM-yyyy hh:mm:ss a"
             const val API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
             const val API_DATE_FORMAT_RECEIVED = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             const val API_DATE_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ssXXX"
@@ -234,33 +245,33 @@ object AppConstant {
     )
 
 
-interface TICKET_TYPE {
-    companion object {
-        const val DAY = 1
-        const val COMBO = 2
-        const val CONFERENCE = 3
+    interface TICKET_TYPE {
+        companion object {
+            const val DAY = 1
+            const val COMBO = 2
+            const val CONFERENCE = 3
 
-        const val SESSION = 4
-        const val SESSION_MIS = 5
+            const val SESSION = 4
+            const val SESSION_MIS = 5
 
 
-
-        const val ONLINE = 1
-        const val OFFLINE = 2
-        const val HYBRID = 3
+            const val ONLINE = 1
+            const val OFFLINE = 2
+            const val HYBRID = 3
+        }
     }
-}
 
-interface USER_TYPE {
-    companion object {
-        const val ATTENDEE = 0
-        const val ADMIN = 1
-        const val BRAND = 2
-        const val SPEAKER = 3
-        const val STAFF = 4
-        const val SUBADMIN = 5
+    interface USER_TYPE {
+        companion object {
+            const val ATTENDEE = 0
+            const val ADMIN = 1
+            const val BRAND = 2
+            const val SPEAKER = 3
+            const val STAFF = 4
+            const val SUBADMIN = 5
+        }
     }
-}
+
     interface MEDIA_TYPE {
         companion object {
             const val VIDEO = "V"
