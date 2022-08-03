@@ -20,7 +20,7 @@ Project name - CloudChatApp
    * activity - ChatActivity.kt, activity_chat.xml
 ### Project Architecture
 ##### Android SDK
-   * minSdk 21
+   * minSdk 26
    * targetSdk 31
    * compileSdk 31
    * gradle 4.1.3
