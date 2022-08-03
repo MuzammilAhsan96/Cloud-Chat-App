@@ -13,6 +13,7 @@ Project name - CloudChatApp
     * AndroidX Core
     * Meterial Design
     * Kotlin-Stdlib
+    * Firebase
 ### Package Setup - Layer
    * activity - MainActivity, ChatActivity
 ### Naming Convention
